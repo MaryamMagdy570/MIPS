@@ -1,0 +1,85 @@
+D:/00_Digital_Design_Diploma/MIPS/MIPS_RegisterFile.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_RegisterFile.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_RegisterFile
+
+Top level modules:
+	MIPS_RegisterFile
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_Adder.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_TopModule.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_TopModule
+
+Top level modules:
+	MIPS_TopModule
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_ALUDecoder.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_ALUDecoder.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_ALUDecoder
+
+Top level modules:
+	MIPS_ALUDecoder
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_TopModule.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_TopModule.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_TopModule
+
+Top level modules:
+	MIPS_TopModule
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_SignExtend.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_SignExtend.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_SignExtend
+
+Top level modules:
+	MIPS_SignExtend
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_InstructionMemory.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_InstructionMemory.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_InstructionMemory
+
+Top level modules:
+	MIPS_InstructionMemory
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_DataMemory.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_DataMemory.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_DataMemory
+
+Top level modules:
+	MIPS_DataMemory
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_MainDecoder.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_MainDecoder.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_MainDecoder
+
+Top level modules:
+	MIPS_MainDecoder
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_ProgramCounter.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_ProgramCounter.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_ProgramCounter
+
+Top level modules:
+	MIPS_ProgramCounter
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_ALU.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_ALU.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_ALU
+
+Top level modules:
+	MIPS_ALU
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_MUX.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_MUX.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_MUX
+
+Top level modules:
+	MIPS_MUX
+
+} {} {}} D:/00_Digital_Design_Diploma/MIPS/MIPS_shift_left_twice.v {1 {vlog -work work {D:\00_Digital_Design_Diploma\MIPS\MIPS_shift_left_twice.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module MIPS_shift_left_twice
+
+Top level modules:
+	MIPS_shift_left_twice
+
+} {} {}}

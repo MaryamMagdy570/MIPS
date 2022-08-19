@@ -1,0 +1,204 @@
+module MIPS_TopModule 
+
+#( parameter 	Width32 = 32, Depth32 = 32, Address5 = 5,
+				Depth100 = 100, Width28 = 28  )
+
+
+(
+input  wire			CLK_Top,			//3
+input  wire			RST_Top,			//3
+output wire [15:0] test_value_Top		//1
+);
+
+
+
+wire 				Jump_Top;			//2
+wire 				Mem2Reg_Top;		//2 
+wire 				Memwrite_Top;		//2
+wire 				Branch_Top;			//2
+wire [2:0]			ALUControl_Top;		//2
+wire 				ALUSrc_Top;			//2
+wire 				RegDst_Top;			//2
+wire 				RegWrite_Top;		//2
+
+wire [1:0]			ALUOp_Top;			//2
+
+
+wire [Width32-1:0]	Instr_Top;			//9
+wire [Width32-1:0]	PC_old_Top;			//2
+wire [Width32-1:0]	PC_new_Top;			//3
+
+wire [Address5-1:0]	WrireAddress_Top;	//2
+
+
+wire [Width32-1:0]	ALUResult_Top;		//3
+wire [Width32-1:0]	SrcA_Top;			//2
+wire [Width32-1:0]	SrcB_Top;			//2
+wire 				Zeroflag_Top;		//2
+
+wire [Width32-1:0]	WriteData_Top;		//3
+wire [Width32-1:0]	ReadData_Top;		//2
+wire [Width32-1:0]	Result_Top;			//2
+
+
+wire [Width32-1:0]	Signlmm_Top;		//3
+wire [Width32-1:0]	ShiftedSignlmm_Top;	//2
+wire [Width32-1:0]	PCPlus4_Top;		//4
+wire [Width32-1:0]	PCBranch_Top;		//2
+wire [Width28-1:0]	PCJump_Top;			//2
+wire [Width32-1:0]	NOJump_Top;			//2
+
+
+
+
+
+
+ MIPS_ProgramCounter #(.width(Width32)) ProgramCounter_inst 
+  (
+    .CLK(CLK_Top),
+    .RST(RST_Top),
+    .PC_old(PC_old_Top),
+    .PC_new(PC_new_Top)
+  );
+    
+
+ MIPS_RegisterFile #(.width(Width32),.depth(Depth32),.Address(Address5)) RegisterFile_inst 
+  (
+    .A1(Instr_Top[25:21]),
+    .A2(Instr_Top[20:16]),
+    .A3(WrireAddress_Top),				
+    .CLK(CLK_Top),
+    .RST(RST_Top),				
+    .WE3(RegWrite_Top),				
+    .WD3(Result_Top),				
+    .RD1(SrcA_Top),				
+    .RD2(WriteData_Top)				
+  );
+    
+
+
+
+ MIPS_DataMemory #(.width(Width32),.depth(Depth100)) DataMemory_inst
+  (
+    .A(ALUResult_Top),
+    .CLK(CLK_Top),
+    .RST(RST_Top),
+    .WE(Memwrite_Top),
+    .WD(WriteData_Top),
+    .RD(ReadData_Top),
+	.test_value(test_value_Top)
+
+  );
+
+
+ MIPS_InstructionMemory #(.width(Width32),.depth(Depth100)) InstructionMemory_inst
+  (
+    .PC(PC_new_Top),
+    .Instr(Instr_Top)
+  );
+
+
+ MIPS_ALU #(.width(Width32)) inst
+  (
+    .SrcA(SrcA_Top),
+    .SrcB(SrcB_Top),
+    .ALUControl(ALUControl_Top),
+    .ALUResult(ALUResult_Top),
+    .ZeroFlag(Zeroflag_Top)
+  );
+  
+
+ MIPS_SignExtend  SignExtend_inst
+  (
+	.Inst(Instr_Top[15:0]),
+	.Signlmm(Signlmm_Top)
+	);
+  
+ MIPS_MainDecoder MainDecoder_inst
+ (
+	.Opcode(Instr_Top[31:26]), 
+	.Mem2Reg(Mem2Reg_Top),
+	.MemWrite(Memwrite_Top),
+	.Branch(Branch_Top),
+	.ALUSrc(ALUSrc_Top),
+	.RegDst(RegDst_Top),
+	.RegWrite(RegWrite_Top),
+	.Jump(Jump_Top),
+	.ALUOp(ALUOp_Top)		
+);
+
+ MIPS_ALUDecoder ALUDecoder_inst
+ (
+	.ALUOp(ALUOp_Top), 
+	.Funct(Instr_Top[5:0]), 
+	.ALUControl(ALUControl_Top)
+ );
+
+ MIPS_shift_left_twice #(.width(Width32)) shift_left_twice_inst1
+ (
+	.IN(Signlmm_Top), 
+	.OUT(ShiftedSignlmm_Top)
+ );
+
+ MIPS_Adder #(.width(Width32)) Adder_inst1
+ (
+	.A(ShiftedSignlmm_Top), 
+	.B(PCPlus4_Top), 
+	.C(PCBranch_Top)
+ );
+
+ MIPS_Adder #(.width(Width32)) Adder_inst2
+ (
+	.A(PC_new_Top), 
+	.B(32'd4), 
+	.C(PCPlus4_Top)
+ );
+
+ MIPS_shift_left_twice #(.width(Width28)) shift_left_twice_inst2
+ (
+	.IN(Instr_Top[25:0]), 
+	.OUT(PCJump_Top)
+ );
+
+
+ MIPS_MUX #(.width(Width32)) MUX_inst1
+ (
+	.IN1(NOJump_Top), 
+	.IN2({PCPlus4_Top[31:28],PCJump_Top[27:0]}),
+	.sel(Jump_Top),
+	.OUT(PC_old_Top)
+ );
+
+ MIPS_MUX #(.width(Width32)) MUX_inst2
+ (
+	.IN1(PCPlus4_Top), 
+	.IN2(PCBranch_Top),
+	.sel(Branch_Top && Zeroflag_Top),
+	.OUT(NOJump_Top)
+ );
+
+ MIPS_MUX #(.width(Width32)) MUX_inst3
+ (
+	.IN1(WriteData_Top),  
+	.IN2(Signlmm_Top),
+	.sel(ALUSrc_Top),
+	.OUT(SrcB_Top)
+ );
+
+ MIPS_MUX #(.width(Width32)) MUX_inst4
+ (
+	.IN1(Instr_Top[20:16]), 
+	.IN2(Instr_Top[15:11]),
+	.sel(RegDst_Top),
+	.OUT(WrireAddress_Top)
+ );
+
+ MIPS_MUX #(.width(Width32)) MUX_inst5
+ (
+	.IN1(ALUResult_Top), 
+	.IN2(ReadData_Top),
+	.sel(Mem2Reg_Top),
+	.OUT(Result_Top)
+ );
+
+endmodule
